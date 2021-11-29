@@ -1,19 +1,20 @@
 local Plug = vim.fn['plug#']
--- vim.g.vim_plug_just_installed = '0'
--- vim.g.vim_plug_path = "~/.config/nvim/autoload/plug.vim"
--- check for vim-plug
--- vim.cmd([[if !filereadable(vim_plug_path)
---    echo "Installing Vim-plug..."
---    echo ""
---    silent !mkdir -p ~/.config/nvim/autoload
---    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
---    let vim_plug_just_installed = 1
--- endif]])
 
--- manually load vim-plug the first time
--- vim.cmd([[if vim_plug_just_installed
---    :execute 'source '.fnameescape(vim_plug_path)
--- endif]])
+vim.g.vim_plug_just_installed = '0'
+-- check for vim-plug
+vim.cmd([[
+ let vim_plug_path = expand("~/.config/nvim/autoload/plug.vim")
+ if !filereadable(vim_plug_path)
+    echo "Installing Vim-plug..."
+    echo ""
+    silent !mkdir -p ~/.config/nvim/autoload
+    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    let vim_plug_just_installed = 1
+ endif
+ " manually load vim-plug the first time
+ if vim_plug_just_installed
+    :execute 'source '.fnameescape(vim_plug_path)
+ endif]])
 
 vim.call('plug#begin', '~/.config/nvim/plugged')
    Plug('nvim-lua/popup.nvim')
@@ -53,10 +54,10 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
 vim.call('plug#end')
 
 -- Install plugins the first time vim runs
--- vim.cmd([[ if vim_plug_just_installed
---    echo "Installing Bundles, please ignore key map error messages"
---    :PlugInstall
--- endif ]])
+vim.cmd([[ if vim_plug_just_installed
+    echo "Installing Bundles, please ignore key map error messages"
+    :PlugInstall
+endif ]])
 
 -- lualine
 require'lualine'.setup {
