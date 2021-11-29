@@ -9,7 +9,7 @@ Neovim configured in Lua.  I have set this one up for writing code and taking no
 Neovim with a few plugins to make it great for writing code, notes, and text.
 
 #### init-noplugins.vim (Vimscript):
-A spartan yet effective Neovim configuration with no plugins.
+A spartan yet effective Neovim configuration with no plugins.  Rename this to "init.vim" before use.
 
 #### Usage:
  - Have Neovim version 5 or later installed on the system.
