@@ -31,21 +31,34 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
    Plug('hrsh7th/cmp-nvim-lsp') -- source for neovim builtin LSP client
    Plug('hrsh7th/cmp-path') --completion source for paths
    Plug('hrsh7th/cmp-buffer') --completion source for buffer words
+   Plug('jose-elias-alvarez/null-ls.nvim') -- hook non-LSP sources to the client
    Plug('saadparwaiz1/cmp_luasnip')
    Plug('L3MON4D3/LuaSnip') -- Snippets plugin
    Plug('lewis6991/gitsigns.nvim')
    Plug('tpope/vim-fugitive') -- Git commands in nvim
-   Plug('dense-analysis/ale') -- asynchronous lint engine
-   Plug('fisadev/vim-isort') --
+   Plug('fisadev/vim-isort') -- sort Python modules
    Plug('kyazdani42/nvim-web-devicons') -- dev icons with colors
    Plug('tpope/vim-rhubarb') -- Fugitive-companion to interact with github
    Plug('tpope/vim-commentary') -- "gc" to comment visual regions/lines
    Plug('ludovicchabant/vim-gutentags') -- Automatic tags management
    Plug('norcalli/nvim-colorizer.lua') -- colorizer
-   Plug('rktjmp/lush.nvim') -- required by nvim-jellybeans
-   Plug('kabouzeid/nvim-jellybeans') -- Color scheme
-   Plug('nvim-lualine/lualine.nvim') -- status line in ua
-   Plug('mengelbrecht/lightline-bufferline')
+   -- Color schemes
+   Plug('rktjmp/lush.nvim')
+   Plug('metalelf0/jellybeans-nvim')
+   Plug('mhartington/oceanic-next')
+   Plug('ellisonleao/gruvbox.nvim')
+   Plug('kyazdani42/nvim-palenight.lua')
+   Plug('marko-cerovac/material.nvim')
+   Plug('navarasu/onedark.nvim')
+   Plug('shaunsingh/seoul256.nvim')
+   Plug('Mofiqul/dracula.nvim')
+   Plug('shaunsingh/nord.nvim')
+   Plug('rafamadriz/neon')
+   Plug('Shatur/neovim-ayu')
+   Plug('bluz71/vim-moonfly-colors')
+   Plug('bluz71/vim-nightfly-guicolors')
+   Plug('ishan9299/nvim-solarized-lua')
+   Plug('nvim-lualine/lualine.nvim') -- status line in lua
   --- Markdown supports
    Plug('godlygeek/tabular')
    Plug('plasticboy/vim-markdown') -- markdown formatter
@@ -58,6 +71,18 @@ vim.cmd([[ if vim_plug_just_installed
     echo "Installing Bundles, please ignore key map error messages"
     :PlugInstall
 endif ]])
+
+-- color scheme
+vim.cmd([[syntax enable]])
+vim.opt.background = 'dark'
+vim.cmd('colorscheme jellybeans-nvim')
+vim.cmd([[hi clear LineNr]])
+vim.cmd([[hi clear SignColumn]])
+vim.cmd([[hi Normal guibg=NONE ctermbg=NONE]])
+vim.cmd([[hi EndOfBuffer guibg=NONE ctermbg=NONE]])
+vim.cmd([[hi! link markdownItalic Italic]])
+vim.cmd([[hi! link markdownBold Bold]])
+vim.opt.termguicolors = true
 
 -- lualine
 require'lualine'.setup {
@@ -146,7 +171,7 @@ vim.api.nvim_set_keymap('n', '<leader>sd', [[<cmd>lua require('telescope.builtin
 vim.api.nvim_set_keymap('n', '<leader>sp', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>cs', [[<cmd>lua require('telescope.builtin').colorscheme()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>cs', [[<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>km', [[<cmd>lua require('telescope.builtin').keymaps()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>ng', [[<cmd>lua require('utils').grep_notes()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>nf', [[<cmd>lua require('utils').find_notes()<CR>]], { noremap = true, silent = true })
@@ -216,9 +241,25 @@ require('nvim-treesitter.configs').setup {
 local nvim_lsp = require 'lspconfig'
 -- luasnip setup
 local luasnip = require 'luasnip'
+--null-ls
+require("null-ls").config({
+    sources = {
+        require("null-ls").builtins.formatting.stylua,
+        require("null-ls").builtins.completion.spell,
+        require("null-ls").builtins.formatting.isort,
+        require("null-ls").builtins.formatting.yapf,
+        require("null-ls").builtins.formatting.shfmt,
+        require("null-ls").builtins.formatting.deno_fmt,
+    },
+})
+-- format on save
+on_attach = function(client)
+    if client.resolved_capabilities.document_formatting then
+        vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
+    end
+end
 -- nvim-cmp setup
 local cmp = require 'cmp'
-
 cmp.setup ({
   snippet = {
     expand = function(args)
@@ -260,7 +301,6 @@ cmp.setup ({
     { name = 'luasnip' },
     { name = 'buffer' },
     { name = 'path' },
-    { name = 'ale' }
   },
 })
 
@@ -280,25 +320,38 @@ for _, lsp in ipairs(servers) do
   }
 end
 
--- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
+-- lsp diagnostics (signs)
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+-- lsp diagnostics (messages)
+function PrintDiagnostics(opts, bufnr, line_nr, client_id)
+  opts = opts or {}
+
+  bufnr = bufnr or 0
+  line_nr = line_nr or (vim.api.nvim_win_get_cursor(0)[1] - 1)
+
+  local line_diagnostics = vim.lsp.diagnostic.get_line_diagnostics(bufnr, line_nr, opts, client_id)
+  if vim.tbl_isempty(line_diagnostics) then return end
+
+  local diagnostic_message = ""
+  for i, diagnostic in ipairs(line_diagnostics) do
+    diagnostic_message = diagnostic_message .. string.format("%d: %s", i, diagnostic.message or "")
+    print(diagnostic_message)
+    if i ~= #line_diagnostics then
+      diagnostic_message = diagnostic_message .. "\n"
+    end
+  end
+  vim.api.nvim_echo({{diagnostic_message, "Normal"}}, false, {})
+end
+
+vim.cmd [[ autocmd CursorHold * lua PrintDiagnostics() ]]
+
+-- The nvim-cmp almost supports LSP's capabilities so you should advertise it to LSP servers..
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
--- ALE
-vim.g.ale_linters = {
-    go = {'gopls'},
-    python = {'isort', 'yapf'},
-    sh = {'shfmt'},
-    typescript = {'deno', 'tslint'},
-}
-
-vim.g.ale_fixers = {
-   ['*'] = {'remove_trailing_lines', 'trim_whitespace'},
-   ['python'] = {'isort','yapf'},
-   ['sh'] = {'shfmt','remove_trailing_lines','trim_whitespace'},
-   ['typescript'] = {'deno','tslint'},
-}
-vim.g.ale_fix_on_save = "1"
 
 -- nvim colorizer
 require'colorizer'.setup()
