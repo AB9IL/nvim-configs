@@ -32,9 +32,10 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
    Plug('hrsh7th/cmp-path') --completion source for paths
    Plug('hrsh7th/cmp-buffer') --completion source for buffer words
    Plug('jose-elias-alvarez/null-ls.nvim') -- hook non-LSP sources to the client
-   Plug('saadparwaiz1/cmp_luasnip')
    Plug('L3MON4D3/LuaSnip') -- Snippets plugin
-   Plug('lewis6991/gitsigns.nvim')
+   Plug('saadparwaiz1/cmp_luasnip') -- luasnip completion source for nvim-cmp
+   Plug('lewis6991/gitsigns.nvim') -- git decorations
+   Plug('onsails/lspkind-nvim') -- icons for lsp functions
    Plug('tpope/vim-fugitive') -- Git commands in nvim
    Plug('fisadev/vim-isort') -- sort Python modules
    Plug('kyazdani42/nvim-web-devicons') -- dev icons with colors
@@ -44,16 +45,11 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
    Plug('norcalli/nvim-colorizer.lua') -- colorizer
    -- Color schemes
    Plug('rktjmp/lush.nvim')
-   Plug('metalelf0/jellybeans-nvim')
-   Plug('mhartington/oceanic-next')
    Plug('ellisonleao/gruvbox.nvim')
    Plug('kyazdani42/nvim-palenight.lua')
    Plug('marko-cerovac/material.nvim')
    Plug('navarasu/onedark.nvim')
-   Plug('shaunsingh/seoul256.nvim')
    Plug('Mofiqul/dracula.nvim')
-   Plug('shaunsingh/nord.nvim')
-   Plug('rafamadriz/neon')
    Plug('Shatur/neovim-ayu')
    Plug('bluz71/vim-moonfly-colors')
    Plug('bluz71/vim-nightfly-guicolors')
@@ -72,23 +68,11 @@ vim.cmd([[ if vim_plug_just_installed
     :PlugInstall
 endif ]])
 
--- color scheme
-vim.cmd([[syntax enable]])
-vim.opt.background = 'dark'
-vim.cmd('colorscheme jellybeans-nvim')
-vim.cmd([[hi clear LineNr]])
-vim.cmd([[hi clear SignColumn]])
-vim.cmd([[hi Normal guibg=NONE ctermbg=NONE]])
-vim.cmd([[hi EndOfBuffer guibg=NONE ctermbg=NONE]])
-vim.cmd([[hi! link markdownItalic Italic]])
-vim.cmd([[hi! link markdownBold Bold]])
-vim.opt.termguicolors = true
-
 -- lualine
 require'lualine'.setup {
   options = {
     icons_enabled = true,
-    theme = 'material',
+    theme = 'moonfly',
 --    component_separators = { left = '', right = ''},
 --    section_separators = { left = '', right = ''},
     component_separators = { left = '', right = ''},
@@ -99,7 +83,7 @@ require'lualine'.setup {
   sections = {
     lualine_a = {'mode'},
     lualine_b = {'branch', 'diff',
-                  {'diagnostics', sources={'nvim_lsp', 'coc'}}},
+                  {'diagnostics', sources={'nvim_diagnostic'}}},
     lualine_c = {'filename'},
     lualine_x = {'encoding', 'fileformat', 'filetype'},
     lualine_y = {'progress'},
@@ -116,7 +100,7 @@ require'lualine'.setup {
 tabline = {
   lualine_a = {'buffers'},
   lualine_b = {'branch'},
-  lualine_c = {'filename'},
+  lualine_c = {},
   lualine_x = {},
   lualine_y = {},
   lualine_z = {'tabs'}
@@ -176,10 +160,7 @@ vim.api.nvim_set_keymap('n', '<leader>km', [[<cmd>lua require('telescope.builtin
 vim.api.nvim_set_keymap('n', '<leader>ng', [[<cmd>lua require('utils').grep_notes()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>nf', [[<cmd>lua require('utils').find_notes()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>nb', [[<cmd>lua require('utils').browse_notes()<CR>]], { noremap = true, silent = true })
--- You dont need to set any of these options. These are the default ones. Only
--- the loading is important
--- To get fzf loaded and working with telescope, you need to call
--- load_extension, somewhere after setup function:
+--load extensions last
 require('telescope').load_extension('fzf')
 
 -- Treesitter configuration
@@ -238,87 +219,29 @@ require('nvim-treesitter.configs').setup {
 
 -- LSP settings
 -- nvim_lsp setup
-local nvim_lsp = require 'lspconfig'
+local nvim_lsp = require('lspconfig')
 -- luasnip setup
-local luasnip = require 'luasnip'
+local luasnip = require('luasnip')
 --null-ls
 require("null-ls").config({
     sources = {
-        require("null-ls").builtins.formatting.stylua,
-        require("null-ls").builtins.completion.spell,
         require("null-ls").builtins.formatting.isort,
         require("null-ls").builtins.formatting.yapf,
+        require("null-ls").builtins.formatting.prettier,
         require("null-ls").builtins.formatting.shfmt,
-        require("null-ls").builtins.formatting.deno_fmt,
+        require("null-ls").builtins.formatting.gofmt,
+        require("null-ls").builtins.formatting.trim_newlines,
+        require("null-ls").builtins.formatting.trim_whitespace,
+        require("null-ls").builtins.completion.luasnip,
+        require("null-ls").builtins.completion.spell,
+        require("null-ls").builtins.diagnostics.eslint_d,
+        require("null-ls").builtins.diagnostics.luacheck,
+        require("null-ls").builtins.diagnostics.mdl,
+        require("null-ls").builtins.diagnostics.flake8,
+        require("null-ls").builtins.diagnostics.golangci_lint,
+        require("null-ls").builtins.diagnostics.shellcheck,
     },
 })
--- format on save
-on_attach = function(client)
-    if client.resolved_capabilities.document_formatting then
-        vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
-    end
-end
--- nvim-cmp setup
-local cmp = require 'cmp'
-cmp.setup ({
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
-  },
-  mapping = {
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
-    ['<Tab>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end,
-    ['<S-Tab>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end,
-  },
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-    { name = 'buffer' },
-    { name = 'path' },
-  },
-})
-
-vim.cmd([[
-augroup NvimCmp
-au!
-au FileType TelescopePrompt lua require('cmp').setup.buffer { enabled = false }
-augroup END
-]])
-
--- Enable the following language servers
-local servers = { 'bashls', 'gopls', 'pylsp', 'tsserver', 'vimls' }
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-  }
-end
 
 -- lsp diagnostics (signs)
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -349,6 +272,89 @@ end
 
 vim.cmd [[ autocmd CursorHold * lua PrintDiagnostics() ]]
 
+-- format on save
+on_attach = function(client)
+    if client.resolved_capabilities.document_formatting then
+        vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
+    end
+end
+
+-- nvim-cmp setup
+local cmp = require('cmp')
+local lspkind = require('lspkind')
+
+cmp.setup ({
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  formatting = {
+    format = function(entry, vim_item)
+        -- fancy icons and a name of kind
+        vim_item.kind = require("lspkind").presets.default[vim_item.kind] ..
+            " " .. vim_item.kind
+        -- set a name for each source
+        vim_item.menu = ({
+            buffer = "[Buffer]",
+            nvim_lsp = "[LSP]",
+            luasnip = "[LuaSnip]",
+            nvim_lua = "[Lua]",
+            look = "[Look]",
+            path = "[Path]",
+            spell = "[Spell]",
+            calc = "[Calc]",
+            emoji = "[Emoji]"
+            })[entry.source.name]
+
+            return vim_item
+    end
+},
+mapping = {
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ["<Down>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
+    ["<Up>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
+    ["<CR>"] = cmp.mapping.confirm { select = true },
+    ['<Tab>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end,
+    ['<S-Tab>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end,
+  },
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = "treesitter" },
+    { name = 'luasnip' },
+    { name = 'buffer' },
+    { name = 'path' },
+  },
+})
+
+vim.cmd([[
+augroup NvimCmp
+au!
+au FileType TelescopePrompt lua require('cmp').setup.buffer { enabled = false }
+augroup END
+]])
+
 -- The nvim-cmp almost supports LSP's capabilities so you should advertise it to LSP servers..
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
@@ -373,14 +379,7 @@ vim.api.nvim_set_keymap('n', '<leader>p', ':Glow<CR>', { noremap = true, silent 
   vim.g.vim_markdown_folding_level = '2'
 
 -- vimwiki
-  -- global wiki settings
-  vim.g.vimwiki_auto_header = 1
-  vim.g.vimwiki_conceal_onechar_markers = 1
-  vim.g.vimwiki_dir_link = 'index'
-  vim.g.vimwiki_folding = 'expr'
-  vim.g.vimwiki_use_calendar = 0
-
-  wiki_prime = {
+wiki_prime = {
     auto_diary_index = 1,
     auto_generate_links = 1,
     auto_generate_tags = 1,
@@ -397,5 +396,11 @@ vim.api.nvim_set_keymap('n', '<leader>p', ':Glow<CR>', { noremap = true, silent 
     path = '~/Documents/Vimwiki/',
     syntax = 'markdown',
     ext = '.md'
-  }
-  vim.g.vimwiki_list = {wiki_prime}
+}
+vim.g.vimwiki_auto_header = 1
+vim.g.vimwiki_conceal_onechar_markers = 1
+vim.g.vimwiki_dir_link = 'index'
+vim.g.vimwiki_folding = 'expr'
+vim.g.vimwiki_use_calendar = 0
+vim.g.vimwiki_global_ext = 0
+vim.g.vimwiki_list = {wiki_prime}

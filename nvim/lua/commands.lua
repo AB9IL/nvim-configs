@@ -9,9 +9,9 @@ vim.cmd([[autocmd BufWritePost *sxhkdrc !pkill -USR1 sxhkd]])
 -- Prevent resize glitch on open
 vim.cmd([[autocmd VimEnter * :silent exec "!kill -s SIGWINCH $PPID"]])
 -- Set filetype syntax and behavior
-vim.cmd([[autocmd BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mdwn,*md set ft=markdown]])
-vim.cmd([[autocmd BufNewFile,BufRead conf,config,*.conf,*.strm,*.xspf set ft=config]])
-vim.cmd([[autocmd BufRead,BufNewFile *.wiki set ft=vimwiki]])
+vim.cmd([[autocmd BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mdwn,*.md set ft=markdown]])
+vim.cmd([[autocmd BufNewFile,BufRead conf,config,*.conf,*rc,*.rc,*.strm,*.xspf set ft=config]])
+vim.cmd([[autocmd BufNewFile,BufRead *.wiki set ft=vimwiki]])
 
 -- Highlight on yank
 vim.cmd ([[

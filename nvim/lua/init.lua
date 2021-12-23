@@ -55,19 +55,13 @@ vim.opt.tabstop = 4
 vim.opt.undofile = true
 
 -- window-local
+vim.opt.termguicolors = true
 vim.opt.breakindent = true
 vim.opt.number = true
-vim.opt.cursorline = true
 vim.opt.signcolumn = 'yes'
 
 -- Python version
 vim.g.python3_host_prog = '/usr/bin/python3'
-
--- color scheme
-vim.g.colors_name = 'jellybeans'
-vim.cmd('syntax on')
-vim.opt.background = 'dark'
-vim.opt.termguicolors = true
 
 --Map blankline
 vim.g.indent_blankline_char = '┊'
