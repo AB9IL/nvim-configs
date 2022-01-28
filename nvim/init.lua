@@ -1,7 +1,7 @@
---------------------
--- Vim Configuration
---------------------
-require("init")
+-----------------------
+-- Neovim Configuration
+-----------------------
+require("basic")
 require("plugins")
 require("colors")
 require("commands")
