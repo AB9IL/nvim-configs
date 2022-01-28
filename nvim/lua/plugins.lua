@@ -97,13 +97,13 @@ require'lualine'.setup {
     lualine_y = {},
     lualine_z = {}
   },
-tabline = {
-  lualine_a = {'buffers'},
-  lualine_b = {'branch'},
-  lualine_c = {},
-  lualine_x = {},
-  lualine_y = {},
-  lualine_z = {'tabs'}
+  tabline = {
+    lualine_a = {'buffers'},
+    lualine_b = {'branch'},
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {'tabs'}
 },
   extensions = {}
 }
@@ -223,25 +223,28 @@ local nvim_lsp = require('lspconfig')
 -- luasnip setup
 local luasnip = require('luasnip')
 --null-ls
-require("null-ls").config({
+local null_ls = require("null-ls")
+null_ls.setup {
+	debug = true,
     sources = {
-        require("null-ls").builtins.formatting.isort,
-        require("null-ls").builtins.formatting.yapf,
-        require("null-ls").builtins.formatting.prettier,
-        require("null-ls").builtins.formatting.shfmt,
-        require("null-ls").builtins.formatting.gofmt,
-        require("null-ls").builtins.formatting.trim_newlines,
-        require("null-ls").builtins.formatting.trim_whitespace,
-        require("null-ls").builtins.completion.luasnip,
-        require("null-ls").builtins.completion.spell,
-        require("null-ls").builtins.diagnostics.eslint_d,
-        require("null-ls").builtins.diagnostics.luacheck,
-        require("null-ls").builtins.diagnostics.mdl,
-        require("null-ls").builtins.diagnostics.flake8,
-        require("null-ls").builtins.diagnostics.golangci_lint,
-        require("null-ls").builtins.diagnostics.shellcheck,
-    },
-})
+        null_ls.builtins.formatting.isort,
+        null_ls.builtins.formatting.yapf,
+        null_ls.builtins.formatting.prettier,
+        null_ls.builtins.formatting.shfmt,
+        null_ls.builtins.formatting.gofmt,
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.formatting.trim_newlines,
+        null_ls.builtins.formatting.trim_whitespace,
+        null_ls.builtins.completion.luasnip,
+        null_ls.builtins.diagnostics.eslint_d,
+        null_ls.builtins.diagnostics.luacheck,
+        null_ls.builtins.diagnostics.mdl,
+        null_ls.builtins.diagnostics.flake8,
+        null_ls.builtins.diagnostics.golangci_lint,
+        null_ls.builtins.diagnostics.shellcheck,
+        },
+    on_attach = on_attach
+}
 
 -- lsp diagnostics (signs)
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -340,18 +343,22 @@ mapping = {
     end,
   },
   sources = {
-    { name = 'nvim_lsp' },
-    { name = "treesitter" },
-    { name = 'luasnip' },
-    { name = 'buffer' },
-    { name = 'path' },
+    { name = 'nvim_lsp', max_item_count = 10 },
+    { name = 'treesitter', max_item_count = 10 },
+    { name = 'luasnip', max_item_count = 10 },
+    { name = 'buffer', max_item_count = 10 },
+    { name = 'path', max_item_count = 10 },
   },
 })
 
+-- Set completion behavior for certain filetypes
 vim.cmd([[
 augroup NvimCmp
 au!
 au FileType TelescopePrompt lua require('cmp').setup.buffer { enabled = false }
+au FileType markdown lua require("cmp").setup.buffer {completion={autocomplete=false}}
+au FileType text lua require("cmp").setup.buffer {completion={autocomplete=false}}
+au FileType html lua require("cmp").setup.buffer {completion={autocomplete=false}}
 augroup END
 ]])
 
