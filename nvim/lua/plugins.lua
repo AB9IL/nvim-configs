@@ -166,7 +166,17 @@ require('telescope').load_extension('fzf')
 -- Treesitter configuration
 -- Parsers must be installed manually via :TSInstall
 require('nvim-treesitter.configs').setup {
-  ensure_installed = "maintained",
+    ensure_installed = { "bash",
+    "comment",
+    "css",
+    "html",
+    "javascript",
+    "lua",
+    "markdown",
+    "python",
+    "regex",
+    "typescript",
+    "yaml",},
   highlight = {
     enable = true, -- false will disable the whole extension
   },
@@ -243,6 +253,7 @@ null_ls.setup {
         null_ls.builtins.diagnostics.golangci_lint,
         null_ls.builtins.diagnostics.shellcheck,
         },
+    log = {enable = false,},
     on_attach = on_attach
 }
 
