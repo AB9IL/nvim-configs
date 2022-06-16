@@ -26,6 +26,7 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
    end })
    Plug('nvim-treesitter/nvim-treesitter')
    Plug('nvim-treesitter/nvim-treesitter-textobjects')
+   Plug('MDeiml/tree-sitter-markdown') -- markdown parser for tree-sitter
    Plug('neovim/nvim-lspconfig') -- Collection of configurations for built-in LSP client
    Plug('hrsh7th/nvim-cmp') -- Autocompletion plugin
    Plug('hrsh7th/cmp-nvim-lsp') -- source for neovim builtin LSP client
@@ -56,8 +57,6 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
    Plug('ishan9299/nvim-solarized-lua')
    Plug('nvim-lualine/lualine.nvim') -- status line in lua
   --- Markdown supports
-   Plug('godlygeek/tabular')
-   Plug('plasticboy/vim-markdown') -- markdown formatter
    Plug('ellisonleao/glow.nvim') -- Preview within Neovim
    Plug('vimwiki/vimwiki') -- note taking tool
 vim.call('plug#end')
