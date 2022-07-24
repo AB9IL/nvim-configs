@@ -155,6 +155,7 @@ vim.api.nvim_set_keymap('n', '<leader>sp', [[<cmd>lua require('telescope.builtin
 vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>cs', [[<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('c', 'Colors<cr>', [[<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>km', [[<cmd>lua require('telescope.builtin').keymaps()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>ng', [[<cmd>lua require('utils').grep_notes()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>nf', [[<cmd>lua require('utils').find_notes()<CR>]], { noremap = true, silent = true })
