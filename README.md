@@ -13,4 +13,6 @@ A spartan yet effective Neovim configuration in Lua, with no plugins.  I use thi
  - Select the minimal or regular setup depending on your text editing needs.
  - Packer manages the plugins. Execute **:PackerUpdate** and **:PackerCompile** to install them the first time.
  - Execute **:PackerSync** for future updates.
- - For max productivity and happy Vimming, learn the many keybindings.
+ - Treesitter is part of the setup. Execute **:TSInstall** on first run, **:TSUpdate** for subsequent updates.
+ - For max productivity and happy Vimming, learn the many keybindings and change as needed.
+ - Make it work for you.
