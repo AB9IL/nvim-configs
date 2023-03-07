@@ -3,21 +3,25 @@ vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+--General Settings
 vim.opt.backup = false
-vim.opt.clipboard = 'unnamedplus'
+vim.opt.clipboard = { 'unnamed', 'unnamedplus' }
 vim.opt.colorcolumn = '80'
 vim.opt.complete = vim.opt.complete + 'kspell'
 vim.opt.completeopt = { 'menuone', 'noinsert', 'noselect' }
 vim.opt.conceallevel = 2
 vim.opt.encoding = 'utf-8'
 vim.opt.expandtab = true
-vim.opt.fillchars = { vert = '┃', diff = ' ', fold = ' ', eob = ' ' }
+vim.opt.fillchars = { diff = ' ', eob = ' ', fold = ' ', horiz = '━',
+  horizup  = '┻', horizdown = '┳', vert = '┃', vertleft  = '┫',
+  vertright = '┣', verthoriz = '╋' }
 vim.opt.hidden = true
 vim.opt.history = 500
 vim.opt.hlsearch = true
 vim.opt.ignorecase = true
 vim.opt.inccommand = 'nosplit'
 vim.opt.incsearch = true
+vim.opt.laststatus = 3
 vim.opt.listchars = {tab = '▸ ', trail = '·'}
 vim.opt.mouse = 'a'
 vim.opt.pastetoggle='<F2>'
@@ -32,6 +36,8 @@ vim.opt.showtabline = 1
 vim.opt.smartcase = true
 vim.opt.smarttab = true
 vim.opt.softtabstop = 4
+vim.opt.spelllang = {'en', 'cjk'}
+vim.opt.spell = false
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.tabstop = 4
