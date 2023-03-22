@@ -92,7 +92,6 @@ vim.api.nvim_set_keymap('c', 'Colors<cr>', [[<cmd>lua require('telescope.builtin
 vim.api.nvim_set_keymap('n', '<leader>km', [[<cmd>lua require('telescope.builtin').keymaps()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>ng', [[<cmd>lua require('utils').grep_notes()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>nf', [[<cmd>lua require('utils').find_notes()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>nb', [[<cmd>lua require('utils').browse_notes()<CR>]], { noremap = true, silent = true })
 --load extensions last
 require('telescope').load_extension('fzf')
 -- Treesitter configuration
