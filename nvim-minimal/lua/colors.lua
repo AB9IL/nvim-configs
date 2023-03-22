@@ -1,11 +1,11 @@
 -- color scheme
 vim.cmd('syntax enable')
+vim.cmd('hi Normal gui=NONE guifg=NONE guibg=NONE cterm=NONE ctermfg=NONE ctermbg=NONE')
+vim.cmd('hi EndOfBuffer guifg=NONE guibg=NONE ctermbg=NONE ctermfg=NONE')
 vim.opt.background = 'dark'
 vim.cmd('colorscheme torte')
 vim.cmd('hi clear LineNr')
 vim.cmd('hi clear SignColumn')
-vim.cmd('hi Normal guibg=NONE ctermbg=NONE')
-vim.cmd('hi EndOfBuffer guibg=NONE ctermbg=NONE')
 vim.cmd('hi! link markdownItalic Italic')
 vim.cmd('hi! link markdownBold Bold')
 vim.cmd('hi! WinSeparator ctermbg=NONE ctermfg=DarkGrey guibg=NONE guifg=#0791D1')
