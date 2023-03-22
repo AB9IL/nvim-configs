@@ -32,18 +32,8 @@ function M.find_notes()
   }
 end
 
-function M.browse_notes()
-  require("telescope.builtin").file_browser {
-    prompt_title = " Browse Notes",
-    prompt_prefix = " ﮷ ",
-    cwd = "~/Documents/Vimwiki/",
-    layout_strategy = "horizontal",
-    layout_config = { preview_width = 0.65, width = 0.75 },
-  }
-end
-
 function M.browse_files()
-  require("telescope.builtin").file_browser {
+  require("telescope.builtin").find_files {
     prompt_title = " Browse Files",
     prompt_prefix = " ﮷ ",
     cwd = ".",
