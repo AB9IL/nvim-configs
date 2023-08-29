@@ -104,12 +104,16 @@ require('nvim-treesitter.configs').setup {
     "javascript",
     "lua",
     "markdown",
+    "perl",
     "python",
     "regex",
+    "ruby",
     "typescript",
     "yaml",},
   highlight = {
     enable = true, -- false will disable the whole extension
+    disable = {""}, -- list of languages to disable
+    additional_vim_regex_highlighting = true,
   },
   incremental_selection = {
     enable = true,
@@ -158,6 +162,27 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
+-- rainbow delimiters
+local rainbow_delimiters = require 'rainbow-delimiters'
+vim.g.rainbow_delimiters = {
+    strategy = {
+        [''] = rainbow_delimiters.strategy['global'],
+        vim = rainbow_delimiters.strategy['local'],
+    },
+    query = {
+        [''] = 'rainbow-delimiters',
+        lua = 'rainbow-blocks',
+    },
+    highlight = {
+        'RainbowDelimiterRed',
+        'RainbowDelimiterYellow',
+        'RainbowDelimiterBlue',
+        'RainbowDelimiterOrange',
+        'RainbowDelimiterGreen',
+        'RainbowDelimiterViolet',
+        'RainbowDelimiterCyan',
+    },
+}
 -- LSP settings
 -- nvim_lsp setup
 local nvim_lsp = require('lspconfig')
@@ -177,7 +202,7 @@ null_ls.setup {
         null_ls.builtins.diagnostics.eslint_d,
         null_ls.builtins.diagnostics.luacheck,
         null_ls.builtins.diagnostics.mdl,
-        null_ls.builtins.diagnostics.flake8,
+        null_ls.builtins.diagnostics.flake8.with({extra_args = {"--max-line-length","88"}}),
         null_ls.builtins.diagnostics.golangci_lint,
         null_ls.builtins.diagnostics.shellcheck,
         },
@@ -266,13 +291,18 @@ mapping = {
 -- The nvim-cmp almost supports LSP's capabilities so you should advertise it to LSP servers..
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+-- nvim comment
+require('nvim_comment').setup()
 -- nvim colorizer
 require'colorizer'.setup()
 -- isort
   vim.g.vim_isort_python_version = 'python3'
   vim.g.vim_isort_map = '<C-i>'
--- Glow
--- preview markdown
+-- Glow (preview markdown)
+require('glow').setup({
+  style = "dark",
+  width = 120,
+})
 vim.api.nvim_set_keymap('n', '<leader>p', ':Glow<CR>', { noremap = true, silent = true })
 -- vimwiki
 wiki_prime = {
@@ -296,7 +326,7 @@ wiki_prime = {
 vim.g.vimwiki_auto_header = 1
 vim.g.vimwiki_conceal_onechar_markers = 1
 vim.g.vimwiki_dir_link = 'index'
-vim.g.vimwiki_folding = 'expr'
+vim.g.vimwiki_folding = 'expr:quick'
 vim.g.vimwiki_use_calendar = 0
 vim.g.vimwiki_global_ext = 0
 vim.g.vimwiki_list = {wiki_prime}
