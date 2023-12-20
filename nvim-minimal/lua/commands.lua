@@ -14,9 +14,10 @@ vim.cmd([[autocmd BufNewFile,BufRead conf,config,*.conf,*.strm,*.xspf set ft=con
 vim.cmd([[autocmd BufRead,BufNewFile *.wiki set ft=vimwiki]])
 
 -- Highlight on yank
-vim.cmd ([[
-  augroup YankHighlight
-    autocmd!
-    autocmd TextYankPost * silent! lua vim.highlight.on_yank()
-  augroup end
-]])
+augroup('YankHighlight', { clear = true })
+autocmd('TextYankPost', {
+  group = 'YankHighlight',
+  callback = function()
+    vim.highlight.on_yank({ higroup = (vim.fn['hlexists']('HighlightedyankRegion') > 0 and 'HighlightedyankRegion' or 'IncSearch'), timeout = '100' })
+  end
+})
