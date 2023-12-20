@@ -1,46 +1,45 @@
--- Regenerate compiled loader file
--- :PackerCompile
--- Remove any disabled or unused plugins
--- :PackerClean
--- Clean, then install missing plugins
--- :PackerInstall
--- Clean, then update and install plugins
--- :PackerUpdate
--- Perform "PackerUpdate" and then "PackerCompile"
--- :PackerSync
-return require('packer').startup({function(use)
-    use 'wbthomason/packer.nvim' -- Packer can manage itself
-    use 'nvim-lua/plenary.nvim'
-    use 'nvim-telescope/telescope.nvim'
-    use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
-    use 'nvim-treesitter/nvim-treesitter'
-    use 'nvim-treesitter/nvim-treesitter-textobjects'
-    use 'MDeiml/tree-sitter-markdown' -- markdown parser for tree-sitter
-    use 'hiphish/rainbow-delimiters.nvim' -- distinguish delimiters based on color
-    use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
-    use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
-    use 'hrsh7th/cmp-nvim-lsp' -- source for neovim builtin LSP client
-    use 'hrsh7th/cmp-path' --completion source for paths
-    use 'hrsh7th/cmp-buffer' --completion source for buffer words
-    use 'jose-elias-alvarez/null-ls.nvim' -- hook non-LSP sources to the client
-    use 'lewis6991/gitsigns.nvim' -- git decorations
-    use 'onsails/lspkind-nvim' -- icons for lsp functions
-    use 'fisadev/vim-isort' -- sort Python modules
-    use 'kyazdani42/nvim-web-devicons' -- dev icons with colors
-    use 'terrortylor/nvim-comment' -- "gc" to comment visual regions/lines
-    use 'norcalli/nvim-colorizer.lua' -- colorizer
-    -- Color schemes
-    use 'rktjmp/lush.nvim'
-    use 'ellisonleao/gruvbox.nvim'
-    use 'marko-cerovac/material.nvim'
-    use 'AlphaTechnolog/onedarker.nvim'
-    use 'Mofiqul/dracula.nvim'
-    use 'Shatur/neovim-ayu'
-    use 'calind/selenized.nvim'
-    -- Status line
-    use 'nvim-lualine/lualine.nvim'
-    -- Markdown supports
-    use 'ellisonleao/glow.nvim' -- Preview within Neovim
-    use 'vimwiki/vimwiki' -- note taking tool
-end,
-config = {git = {clone_timeout = 360}}})
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  -- bootstrap lazy.nvim
+  -- stylua: ignore
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup({
+    checker = { enabled = false, notify = false }, -- automatically check for plugin updates
+    git = { timeout = 300 },
+    "nvim-lua/plenary.nvim",
+    "nvim-telescope/telescope.nvim",
+    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
+    "nvim-treesitter/nvim-treesitter",
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    "MDeiml/tree-sitter-markdown", -- markdown parser for tree-sitter
+    "hiphish/rainbow-delimiters.nvim", -- distinguish delimiters based on color
+    "neovim/nvim-lspconfig", -- Collection of configurations for built-in LSP client
+    "hrsh7th/nvim-cmp", -- Autocompletion plugin
+    "hrsh7th/cmp-nvim-lsp", -- source for neovim builtin LSP client
+    "hrsh7th/cmp-path", --completion source for paths
+    "hrsh7th/cmp-buffer", --completion source for buffer words
+    "nvimtools/none-ls.nvim", -- LSP diagnostics, code actions, and more via Lua
+    "lewis6991/gitsigns.nvim", -- git decorations
+    "onsails/lspkind-nvim", -- icons for lsp functions
+    "fisadev/vim-isort", -- sort Python modules
+    "kyazdani42/nvim-web-devicons", -- dev icons with colors
+    "terrortylor/nvim-comment", -- "gc" to comment visual regions/lines
+    "norcalli/nvim-colorizer.lua", -- colorizer
+    "rktjmp/lush.nvim", -- Color scheme
+    "marko-cerovac/material.nvim", -- Color scheme
+    "AlphaTechnolog/onedarker.nvim", -- Color scheme
+    "Shatur/neovim-ayu", -- Color scheme
+    "nvim-lualine/lualine.nvim",-- Status line
+    "ellisonleao/glow.nvim", -- Markdown preview within Neovim
+    "jakewvincent/mkdnflow.nvim", -- Markdown note taking tool
+})
