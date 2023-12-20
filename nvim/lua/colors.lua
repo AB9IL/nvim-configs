@@ -14,6 +14,7 @@ vim.opt.cursorcolumn = true
 vim.cmd('hi Search ctermbg=Blue ctermfg=LightGrey cterm=bold guifg=#CCCCCC guibg=#4A4CB2')
 vim.cmd('hi Colorcolumn ctermbg=Yellow cterm=bold guibg=#303030')
 vim.cmd('hi Cursorline ctermbg=Yellow cterm=bold guibg=#202020')
+vim.cmd('hi HighlightedyankRegion ctermfg=Black ctermbg=Yellow cterm=bold guifg=#000000 guibg=#9CE342')
 vim.cmd('hi clear SpellBad')
 vim.cmd('hi clear SpellCap')
 vim.cmd('hi clear SpellRare')
