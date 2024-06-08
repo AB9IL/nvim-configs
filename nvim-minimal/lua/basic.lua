@@ -24,7 +24,7 @@ vim.opt.incsearch = true
 vim.opt.laststatus = 3
 vim.opt.listchars = {tab = '▸ ', trail = '·'}
 vim.opt.mouse = 'a'
-vim.opt.pastetoggle='<F2>'
+--vim.opt.pastetoggle='<F2>'
 vim.opt.path = vim.opt.path + '.,**'
 vim.opt.ruler = true
 vim.opt.scrolloff = 8

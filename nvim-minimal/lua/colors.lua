@@ -11,8 +11,8 @@ vim.cmd('hi! link markdownBold Bold')
 vim.cmd('hi! WinSeparator ctermbg=NONE ctermfg=DarkGrey guibg=NONE guifg=#0791D1')
 vim.opt.cursorline = true
 vim.opt.cursorcolumn = true
-vim.cmd('hi Search ctermbg=Blue ctermfg=LightGrey cterm=bold guifg=#CCCCCC guibg=#4A4CB2')
-vim.cmd('hi Visual ctermbg=Blue ctermfg=LightGrey cterm=bold guifg=#CCCCCC guibg=#4A4CB2')
+vim.cmd('hi Search ctermbg=DarkGrey ctermfg=Black cterm=bold guifg=#CCCCDD guibg=#86868C')
+vim.cmd('hi Visual ctermbg=DarkGrey ctermfg=Black cterm=bold guifg=#CCCCDD guibg=#86868C')
 vim.cmd('hi Colorcolumn ctermbg=Grey cterm=bold guibg=#303030')
 vim.cmd('hi Cursorline ctermbg=Grey cterm=bold guibg=#303030')
 vim.cmd('hi Cursorcolumn ctermbg=Grey cterm=bold guibg=#303030')

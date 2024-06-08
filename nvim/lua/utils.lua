@@ -14,7 +14,7 @@ function M.grep_notes()
   opts.hidden = true
   -- opts.file_ignore_patterns = { 'thesaurus/'}
   opts.search_dirs = {
-    "~/Documents/Vimwiki/",
+    "~/Documents/Notes/",
   }
   opts.prompt_prefix = "   "
   opts.prompt_title = " Grep Notes"
@@ -26,7 +26,7 @@ function M.find_notes()
   require("telescope.builtin").find_files {
     prompt_title = " Find Notes",
     path_display = { "smart" },
-    cwd = "~/Documents/Vimwiki/",
+    cwd = "~/Documents/Notes/",
     layout_strategy = "horizontal",
     layout_config = { preview_width = 0.65, width = 0.75 },
   }

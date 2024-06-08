@@ -1,8 +1,17 @@
 -- status line
 vim.cmd([[
-hi PrimaryBlock ctermfg=white ctermbg=grey guifg=white guibg=grey
-hi SecondaryBlock ctermfg=white ctermbg=grey guifg=white guibg=grey
-hi Blanks ctermfg=white ctermbg=grey guifg=white guibg=grey
+hi StatusLine guifg=White guibg=Black ctermfg=White ctermbg=Black
+function! InsertStatuslineColor(mode)
+    if a:mode == 'i'
+        hi statusline guifg=Cyan guibg=Black ctermfg=Cyan ctermbg=Black
+    elseif a:mode == 'r'
+        hi statusline  guifg=Red guibg=Black ctermfg=Red  ctermbg=Black
+    else
+        hi statusline guifg=White guibg=Black ctermfg=White ctermbg=Black
+    endif
+endfunction
+au InsertEnter * call InsertStatuslineColor(v:insertmode)
+au InsertLeave * hi statusline guifg=White guibg=Black ctermfg=White ctermbg=Black
 ]])
 
 local mode_map = {

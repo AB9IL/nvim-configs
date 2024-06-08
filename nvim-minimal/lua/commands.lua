@@ -1,18 +1,32 @@
+-- Create/get autocommand group
+local augroup = vim.api.nvim_create_augroup
+-- Create autocommand
+local autocmd = vim.api.nvim_create_autocmd
 -- remove trailing whitespaces
-vim.cmd([[autocmd BufWritePre * %s/\s\+$//e]])
--- remove trailing newline
-vim.cmd([[autocmd BufWritePre * %s/\n\+\%$//e]])
+autocmd('BufWritePre', {
+  pattern = '*',
+  command = ":%s/\\s\\+$//e"
+})
 -- Run xrdb whenever Xdefaults or Xresources are updated.
-vim.cmd([[autocmd BufWritePost *xresources !xrdb %]])
+autocmd('BufWritePost', {
+  pattern = 'X{resources,defaults}',
+  command = ":silent !xrdb %"
+})
 -- Update binds when sxhkdrc is updated.
-vim.cmd([[autocmd BufWritePost *sxhkdrc !pkill -USR1 sxhkd]])
+autocmd('BufWritePost', {
+  pattern = '*sxhkdrc',
+  command = ":!pkill -USR1 sxhkd"
+})
 -- Prevent resize glitch on open
-vim.cmd([[autocmd VimEnter * :silent exec "!kill -s SIGWINCH $PPID"]])
+autocmd('VimEnter', {
+    pattern = '*',
+    command = ":silent !kill -s SIGWINCH $PPID"
+})
 -- Set filetype syntax and behavior
-vim.cmd([[autocmd BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mdwn,*md set ft=markdown]])
-vim.cmd([[autocmd BufNewFile,BufRead conf,config,*.conf,*.strm,*.xspf set ft=config]])
-vim.cmd([[autocmd BufRead,BufNewFile *.wiki set ft=vimwiki]])
-
+autocmd({"BufNewFile", "BufRead"}, {pattern = {"*.markdown", "*.mdown", "*.mkd", "*.mdwn", "*.md", "*-outline", "*-manuscript"}, command = "set ft=markdown wrap linebreak nolist"})
+autocmd({"BufNewFile", "BufRead"}, {pattern = {"*.txt", "*.text", "*.log"}, command = "set ft=text wrap linebreak nolist"})
+autocmd({"BufNewFile", "BufRead"}, {pattern = {"conf", "config", "*.conf", "*rc", "*.rc", "*.strm", "*.xspf"}, command = "set ft=config"})
+autocmd({"BufNewFile", "BufRead"}, {pattern = {"*.wiki"}, command = "set ft=vimwiki"})
 -- Highlight on yank
 augroup('YankHighlight', { clear = true })
 autocmd('TextYankPost', {
