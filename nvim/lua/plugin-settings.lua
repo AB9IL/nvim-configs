@@ -52,15 +52,7 @@ require("lualine").setup({
 })
 
 -- Gitsigns
-require("gitsigns").setup({
-	signs = {
-		add = { hl = "GitGutterAdd", text = "+" },
-		change = { hl = "GitGutterChange", text = "~" },
-		delete = { hl = "GitGutterDelete", text = "_" },
-		topdelete = { hl = "GitGutterDelete", text = "‾" },
-		changedelete = { hl = "GitGutterChange", text = "~" },
-	},
-})
+require("gitsigns").setup()
 -- Telescope
 require("telescope").setup({
 	defaults = {
@@ -190,6 +182,7 @@ require("nvim-treesitter.configs").setup({
 		"javascript",
 		"lua",
 		"markdown",
+		"markdown_inline",
 		"perl",
 		"python",
 		"regex",
