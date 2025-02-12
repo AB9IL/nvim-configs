@@ -1,17 +1,17 @@
 -- status line
 vim.cmd([[
-hi StatusLine guifg=White guibg=Black ctermfg=White ctermbg=Black
+au VimEnter * hi statusline guifg=#CCCCDD guibg=#262626 ctermfg=White ctermbg=Black
 function! InsertStatuslineColor(mode)
     if a:mode == 'i'
-        hi statusline guifg=Cyan guibg=Black ctermfg=Cyan ctermbg=Black
+        hi statusline guifg=#5080DD guibg=#262626 ctermfg=Cyan ctermbg=Black
     elseif a:mode == 'r'
-        hi statusline  guifg=Red guibg=Black ctermfg=Red  ctermbg=Black
+        hi statusline  guifg=#DD4040 guibg=#262626 ctermfg=Red  ctermbg=Black
     else
-        hi statusline guifg=White guibg=Black ctermfg=White ctermbg=Black
+        hi statusline guifg=#CCCCDD guibg=#262626 ctermfg=White ctermbg=Black
     endif
 endfunction
 au InsertEnter * call InsertStatuslineColor(v:insertmode)
-au InsertLeave * hi statusline guifg=White guibg=Black ctermfg=White ctermbg=Black
+au InsertLeave * hi statusline guifg=#CCCCDD guibg=#262626 ctermfg=White ctermbg=Black
 ]])
 
 local mode_map = {

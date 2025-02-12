@@ -23,38 +23,29 @@ autocmd("VimEnter", {
 	command = ":silent !kill -s SIGWINCH $PPID",
 })
 -- Set filetype syntax and behavior
-autocmd({ "BufNewFile", "BufRead" }, {
-	pattern = {
-		"*.markdown",
-		"*.mdown",
-		"*.mkd",
-		"*.mdwn",
-		"*.md",
-		"*-outline",
-		"*-manuscript",
-	},
-	command = "set ft=markdown wrap linebreak nolist",
-})
-autocmd({ "BufNewFile", "BufRead" }, {
-	pattern = {
-		"*.txt",
-		"*.text",
-	},
-	command = "set ft=text wrap linebreak nolist",
-})
-autocmd({ "BufNewFile", "BufRead" }, {
-	pattern = {
-		"conf",
-		"config",
-		"*.conf",
-		"*rc",
-		"*.rc",
-		"*.strm",
-		"*.xspf",
-		"*.log",
-	},
-	command = "set ft=config",
-})
+autocmd(
+	{ "BufNewFile", "BufRead" },
+	{
+		pattern = {
+			"*.markdown",
+			"*.mdown",
+			"*.mkd",
+			"*.mdwn",
+			"*.md",
+			"*-outline",
+			"*-manuscript",
+		},
+		command = "set ft=markdown wrap linebreak nolist",
+	}
+)
+autocmd(
+	{ "BufNewFile", "BufRead" },
+	{ pattern = { "*.txt", "*.text", "*.log" }, command = "set ft=text wrap linebreak nolist" }
+)
+autocmd(
+	{ "BufNewFile", "BufRead" },
+	{ pattern = { "conf", "config", "*.conf", "*rc", "*.rc", "*.strm", "*.xspf" }, command = "set ft=config" }
+)
 -- Highlight on yank
 augroup("YankHighlight", { clear = true })
 autocmd("TextYankPost", {
