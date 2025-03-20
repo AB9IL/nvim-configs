@@ -2,6 +2,7 @@
 vim.cmd("syntax enable")
 vim.cmd("hi! Normal gui=NONE guifg=NONE guibg=NONE cterm=NONE ctermfg=NONE ctermbg=NONE")
 vim.cmd("hi! Visual gui=NONE guifg=NONE guibg=NONE cterm=NONE ctermfg=NONE ctermbg=NONE")
+vim.cmd("hi! Search gui=NONE guifg=NONE guibg=NONE cterm=NONE ctermfg=NONE ctermbg=NONE")
 vim.cmd("hi EndOfBuffer guifg=NONE guibg=NONE ctermbg=NONE ctermfg=NONE")
 vim.opt.background = "dark"
 vim.cmd("colorscheme material")
@@ -14,9 +15,9 @@ vim.opt.cursorline = true
 vim.opt.cursorcolumn = true
 vim.cmd("hi! Search ctermbg=DarkGrey ctermfg=Black cterm=bold guifg=#CCCCDD guibg=#5775E4")
 vim.cmd("hi! Visual ctermbg=DarkGrey ctermfg=Black cterm=bold guifg=#CCCCDD guibg=#5775E4")
-vim.cmd("hi Colorcolumn ctermbg=Grey cterm=bold guibg=#303030")
-vim.cmd("hi Cursorline ctermbg=Grey cterm=bold guibg=#303030")
-vim.cmd("hi Cursorcolumn ctermbg=Grey cterm=bold guibg=#303030")
+vim.cmd("hi! Colorcolumn ctermbg=Grey cterm=bold guibg=#303030")
+vim.cmd("hi! Cursorline ctermbg=Grey cterm=bold guibg=#303030")
+vim.cmd("hi! Cursorcolumn ctermbg=Grey cterm=bold guibg=#303030")
 vim.cmd("hi! HighlightedyankRegion ctermfg=Black ctermbg=Yellow cterm=bold guifg=#000000 guibg=#9CE342")
 vim.cmd("hi clear SpellBad")
 vim.cmd("hi clear SpellCap")
