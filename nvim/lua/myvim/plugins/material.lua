@@ -12,6 +12,10 @@ return {
         disable = {
             background = true
         },
+        custom_highlights = {
+                Comment = { fg = "#606060", italic = true },
+                Search = { fg = "#202020", bg = "#5775E4" },
+            },
 	})
     -- set the style
     vim.g.material_style = "deep ocean"
