@@ -15,6 +15,7 @@ return {
         custom_highlights = {
                 Comment = { fg = "#606060", italic = true },
                 Search = { fg = "#202020", bg = "#5775E4" },
+                CurSearch = { fg = "#202020", bg = "#00AAAA" },
             },
 	})
     -- set the style

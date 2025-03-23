@@ -14,6 +14,7 @@ vim.cmd('hi! WinSeparator ctermbg=NONE ctermfg=DarkGrey guibg=NONE guifg=#0791D1
 vim.opt.cursorline = true
 vim.opt.cursorcolumn = true
 vim.cmd('hi! Search ctermbg=DarkGrey ctermfg=Black cterm=bold guifg=#CCCCDD guibg=#5775E4')
+vim.cmd('hi! CurSearch ctermbg=DarkGrey ctermfg=Black cterm=bold guifg=#CCCCDD guibg=#00AAAA')
 vim.cmd('hi! Visual ctermbg=DarkGrey ctermfg=Black cterm=bold guifg=#CCCCDD guibg=#5775E4')
 vim.cmd('hi! Colorcolumn ctermbg=Grey cterm=bold guibg=#303030')
 vim.cmd('hi! Cursorline ctermbg=Grey cterm=bold guibg=#303030')
