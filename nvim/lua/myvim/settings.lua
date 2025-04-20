@@ -110,11 +110,6 @@ autocmd("BufWritePost", {
 	pattern = "*sxhkdrc",
 	command = ":!pkill -USR1 sxhkd",
 })
--- Prevent resize glitch on open
-autocmd("VimEnter", {
-	pattern = "*",
-	command = ":silent !kill -s SIGWINCH $PPID",
-})
 -- Set filetype syntax and behavior
 autocmd(
 	{ "BufNewFile", "BufRead" },
