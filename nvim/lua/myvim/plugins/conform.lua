@@ -26,7 +26,6 @@ return {
         css = { "prettier" },
         javascript = { "prettier" },
         javascriptreact = { "prettier" },
-        html = { "prettier" },
         json = { "prettier" },
         markdown = { "prettier" },
         perl = { "prettier" },

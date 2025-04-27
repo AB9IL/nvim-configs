@@ -10,6 +10,8 @@ vim.opt.colorcolumn = '80'
 vim.opt.complete = vim.opt.complete + 'kspell'
 vim.opt.completeopt = { 'menuone', 'noinsert', 'noselect' }
 vim.opt.conceallevel = 2
+vim.opt.cursorcolumn = true
+vim.opt.cursorline = true
 vim.opt.encoding = 'utf-8'
 vim.opt.expandtab = true
 vim.opt.fillchars = { diff = ' ', eob = ' ', fold = ' ', horiz = '━',
