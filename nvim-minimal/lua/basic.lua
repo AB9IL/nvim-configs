@@ -35,6 +35,7 @@ vim.opt.shiftwidth = 4
 vim.opt.showmode = false
 vim.opt.shortmess = vim.opt.shortmess + 'c'
 vim.opt.showtabline = 1
+vim.opt.sidescrolloff = 8
 vim.opt.smartcase = true
 vim.opt.smarttab = true
 vim.opt.softtabstop = 4
@@ -71,6 +72,7 @@ vim.opt.signcolumn = 'yes'
 --netrw
 vim.g.netrw_banner=0
 vim.g.netrw_winsize=25
+vim.g.netrw_liststyle=3
 
 -- Python version
 vim.g.python3_host_prog = '/usr/bin/python3'
