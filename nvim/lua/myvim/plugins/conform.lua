@@ -23,23 +23,23 @@ return {
         python = { "ruff_format","ruff_organize_imports" },
         lua = { "stylua" },
         sh = { "shfmt", "shellcheck" },
-        css = { "prettier" },
-        javascript = { "prettier" },
-        javascriptreact = { "prettier" },
-        json = { "prettier" },
-        markdown = { "prettier" },
-        perl = { "prettier" },
-        toml = { "prettier" },
-        typescript = { "prettier" },
-        typescriptreact = { "prettier" },
-        yaml = { "prettier" },
+        css = { "prettierd" },
+        javascript = { "prettierd" },
+        javascriptreact = { "prettierd" },
+        json = { "prettierd" },
+        markdown = { "prettierd" },
+        perl = { "prettierd" },
+        toml = { "prettierd" },
+        typescript = { "prettierd" },
+        typescriptreact = { "prettierd" },
+        yaml = { "prettierd" },
         },
         -- Set default options
         default_format_opts = {
         lsp_format = "fallback",
         },
         -- Set up format-on-save
-        format_on_save = { timeout_ms = 500 },
+        format_on_save = { timeout_ms = 1000 },
         -- Customize formatters
         formatters = {
         shfmt = {
