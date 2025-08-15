@@ -16,6 +16,7 @@ return {
                 Comment = { fg = "#606060", italic = true },
                 Search = { fg = "#202020", bg = "#5775E4" },
                 CurSearch = { fg = "#202020", bg = "#00AAAA" },
+                Visual = { bg = "#303030" }
             },
 	})
     -- set the style
