@@ -14,6 +14,10 @@ map("", "<Up>", "gk")
 map("i", "<Down>", "<C-o>gj")
 map("i", "<Up>", "<C-o>gk")
 
+-- Better centering of the cursor line when scrolling up or down
+map("n", "<C-d>", "<C-d>zz")
+map("n", "<C-u>", "<C-u>zz")
+
 -- Navigate tabs
 map("", "tt", ":tabnew<CR>")
 map("", "<M-Right>", ":tabn<CR>")

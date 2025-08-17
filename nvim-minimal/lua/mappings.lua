@@ -11,6 +11,10 @@ keymap('', '<Up>', 'gk', opts)
 keymap('i', '<Down>', '<C-o>gj', opts)
 keymap('i', '<Up>', '<C-o>gk', opts)
 
+-- Better centering of the cursor line when scrolling up or down
+keymap('n', '<C-d>', '<C-d>zz')
+keymap('n', '<C-u>', '<C-u>zz')
+
 -- Navigate tabs
 keymap('', 'tt', ':tabnew<CR>', opts)
 keymap('', '<M-Right>', ':tabn<CR>', opts)
