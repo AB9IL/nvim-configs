@@ -17,7 +17,7 @@ return {
       underline = true,
       severity_sort = true,
     })
-    require('lspconfig').harper_ls.setup{
+    vim.lsp.config('harper_ls', {
         settings = {
             ["harper-ls"] = {
             linters = {
@@ -26,6 +26,7 @@ return {
             }
             }
         },
-    }
+    })
+    vim.lsp.enable('harper_ls')
   end,
 }
