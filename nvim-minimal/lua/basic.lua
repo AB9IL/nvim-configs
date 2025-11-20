@@ -60,7 +60,6 @@ vim.opt.shiftround = true
 vim.opt.shiftwidth = 4
 vim.opt.smartindent = true
 vim.opt.swapfile = false
-vim.opt.tabstop = 4
 vim.opt.undofile = true
 
 -- window-local
