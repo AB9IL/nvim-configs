@@ -17,11 +17,6 @@ autocmd("BufWritePost", {
 	pattern = "*sxhkdrc",
 	command = ":!pkill -USR1 sxhkd",
 })
--- Prevent resize glitch on open
-autocmd("VimEnter", {
-	pattern = "*",
-	command = ":silent !kill -s SIGWINCH $PPID",
-})
 -- Set filetype syntax and behavior
 autocmd({ "BufNewFile", "BufRead" }, {
 	pattern = {
@@ -60,9 +55,9 @@ augroup("YankHighlight", { clear = true })
 autocmd("TextYankPost", {
 	group = "YankHighlight",
 	callback = function()
-		vim.highlight.on_yank({
+		vim.hl.on_yank({
 			higroup = (vim.fn["hlexists"]("HighlightedyankRegion") > 0 and "HighlightedyankRegion" or "IncSearch"),
-			timeout = "100",
+			timeout = "200",
 		})
 	end,
 })
