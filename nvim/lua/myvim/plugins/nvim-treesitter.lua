@@ -53,7 +53,7 @@ return {
         },
         indent = {
             enable = true,
-            disable = "html",
+            disable = { "html" },
         },
     })
 end,

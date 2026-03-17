@@ -39,6 +39,13 @@ autocmd({ "BufNewFile", "BufRead" }, {
 })
 autocmd({ "BufNewFile", "BufRead" }, {
 	pattern = {
+		"*.htm",
+		"*.html",
+	},
+	command = "filetype plugin indent on",
+})
+autocmd({ "BufNewFile", "BufRead" }, {
+	pattern = {
 		"conf",
 		"config",
 		"*.conf",
