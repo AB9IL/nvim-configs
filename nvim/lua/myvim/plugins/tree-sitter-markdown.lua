@@ -1,15 +1,13 @@
 return {
-    "MDeiml/tree-sitter-markdown",
-    -- markdown parser for tree-sitter
+  "tree-sitter-grammars/tree-sitter-markdown",
+  -- Markdown parser for Treesitter
 
+  config = function()
     require("nvim-treesitter.configs").setup({
-        highlight = {
-            enable = true,
-        },
-        parser = {
-            markdown = {
-                enable = true,
-            },
-        },
-    }),
+      highlight = {
+        enable = true,
+      },
+      ensure_installed = { "markdown", "markdown_inline" },
+    })
+  end,
 }

@@ -4,9 +4,7 @@ return {
     opts = {
       rocks = "luautf8",
     },
-    config = function()
-      require('mkdnflow').setup({
-        rocks = "luautf8",
-      })
+    config = function(_, opts)
+      require('mkdnflow').setup(opts)
     end,
   }
