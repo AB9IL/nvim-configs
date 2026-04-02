@@ -82,6 +82,9 @@ o.breakindent = true
 o.number = true
 o.signcolumn = "yes"
 
+--disable Perl provider
+g.loaded_perl_provider = 0
+
 -- Python version
 g.python3_host_prog = "/usr/bin/python3"
 
@@ -125,13 +128,10 @@ autocmd({ "BufNewFile", "BufRead" }, {
 	},
 	command = "set ft=markdown wrap linebreak nolist",
 })
-autocmd({ "BufNewFile", "BufRead" }, {
-	pattern = {
-		"*.txt",
-		"*.text",
-	},
-	command = "set ft=text wrap linebreak nolist",
-})
+autocmd(
+	{ "BufNewFile", "BufRead" },
+	{ pattern = { "*.txt", "*.text", "*.log" }, command = "set ft=text wrap linebreak nolist" }
+)
 autocmd({ "BufNewFile", "BufRead" }, {
 	pattern = {
 		"*.htm",
@@ -139,19 +139,10 @@ autocmd({ "BufNewFile", "BufRead" }, {
 	},
 	command = "filetype plugin indent on",
 })
-autocmd({ "BufNewFile", "BufRead" }, {
-	pattern = {
-		"conf",
-		"config",
-		"*.conf",
-		"*rc",
-		"*.rc",
-		"*.strm",
-		"*.xspf",
-		"*.log",
-	},
-	command = "set ft=config",
-})
+autocmd(
+	{ "BufNewFile", "BufRead" },
+	{ pattern = { "conf", "config", "*.conf", "*.log", "*rc", "*.rc", "*.strm", "*.xspf" }, command = "set ft=config" }
+)
 -- Highlight on yank
 augroup("YankHighlight", { clear = true })
 autocmd("TextYankPost", {

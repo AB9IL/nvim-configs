@@ -15,9 +15,6 @@ return {
       },
       latex = {
         enabled = false
-      },
-      render_modes = {
-        "n", "c", "t"
       }
     },
     config = function(_, opts)
