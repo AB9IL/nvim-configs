@@ -1,60 +1,55 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
-	-- Smart syntax highlighting
-	-- Parsers must be installed manually via :TSInstall
-	event = { "BufReadPre", "BufNewFile" },
+	lazy = false,
+	branch = "main", -- Required for 0.12
 	build = ":TSUpdate",
 	config = function()
-		local treesitter = require("nvim-treesitter.config")
+		local ts = require("nvim-treesitter")
 
-		treesitter.setup({
-			ensure_installed = {
-				"bash",
-				"comment",
-				"css",
-				"csv",
-				"html",
-				"ini",
-				"javascript",
-				"lua",
-				"markdown",
-				"markdown_inline",
-				"perl",
-				"php",
-				"python",
-				"regex",
-				"rst",
-				"ruby",
-				"toml",
-				"typescript",
-				"xml",
-				"yaml",
-			},
-			highlight = {
-				enable = true, -- false will disable the whole extension
-				disable = { "" }, -- list of languages to disable
-				additional_vim_regex_highlighting = true,
-			},
-			incremental_selection = {
-				enable = true,
-				keymaps = {
-					init_selection = "gnn",
-					node_incremental = "grn",
-					scope_incremental = "grc",
-					node_decremental = "grm",
-				},
+		-- List of parsers to install
+		local languages = {
+			"bash",
+			"comment",
+			"css",
+			"csv",
+			"html",
+			"ini",
+			"javascript",
+			"lua",
+			"markdown",
+			"markdown_inline",
+			"perl",
+			"php",
+			"python",
+			"regex",
+			"rst",
+			"ruby",
+			"toml",
+			"typescript",
+			"xml",
+			"yaml",
+		}
 
-				rainbow = {
-					enable = true,
-					disable = { "html" },
-					extended_mode = false,
-					max_file_lines = nil,
-				},
-			},
-			indent = {
-				enable = true,
-				disable = "html",
-			},
+		-- Initialize the plugin
+		ts.setup()
+
+		-- Install the specified parsers
+		ts.install(languages)
+
+		-- Enable features per-filetype with an autocmd
+		local group = vim.api.nvim_create_augroup("TreesitterFeatures", { clear = true })
+		vim.api.nvim_create_autocmd("FileType", {
+			group = group,
+			pattern = languages,
+			callback = function()
+				-- Enable syntax highlighting
+				vim.treesitter.start()
+				-- Enable indentation
+				vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+				-- Enable folding
+				-- vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+				-- vim.wo.foldmethod = "expr"
+			end,
 		})
 	end,
 }

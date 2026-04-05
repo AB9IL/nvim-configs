@@ -1,13 +1,12 @@
 return {
 	"tree-sitter-grammars/tree-sitter-markdown",
-	-- Markdown parser for Treesitter
-
+	"nvim-treesitter/nvim-treesitter",
+	branch = "main",
+	build = ":TSUpdate",
 	config = function()
-		require("nvim-treesitter.config").setup({
-			highlight = {
-				enable = true,
-			},
-			ensure_installed = { "markdown", "markdown_inline" },
-		})
+		local ts = require("nvim-treesitter")
+		ts.setup()
+		-- Explicitly install the markdown parsers
+		ts.install({ "markdown", "markdown_inline" })
 	end,
 }
