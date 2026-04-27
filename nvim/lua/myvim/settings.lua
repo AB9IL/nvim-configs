@@ -89,8 +89,6 @@ o.tabstop = 4
 o.undofile = true
 
 -- window-local
-o.cursorcolumn = true
-o.cursorline = true
 o.termguicolors = true
 o.breakindent = true
 o.number = true

@@ -89,8 +89,6 @@ vim.opt.swapfile = false
 vim.opt.undofile = true
 
 -- window-local
-vim.opt.cursorcolumn = true
-vim.opt.cursorline = true
 vim.opt.termguicolors = true
 vim.opt.breakindent = true
 vim.opt.number = true
